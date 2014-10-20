@@ -15,6 +15,8 @@
 		482DAD5719F59FBF000CEBA1 /* GithubToGoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD5619F59FBF000CEBA1 /* GithubToGoTests.swift */; };
 		482DAD6419F5AB8A000CEBA1 /* SplitContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */; };
 		482DAD6719F5B2EA000CEBA1 /* GithubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6619F5B2EA000CEBA1 /* GithubService.swift */; };
+		482DAD6919F5BB83000CEBA1 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6819F5BB83000CEBA1 /* ReposViewController.swift */; };
+		482DAD6B19F5C4A3000CEBA1 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6A19F5C4A3000CEBA1 /* Repo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		482DAD5619F59FBF000CEBA1 /* GithubToGoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubToGoTests.swift; sourceTree = "<group>"; };
 		482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitContainerViewController.swift; sourceTree = "<group>"; };
 		482DAD6619F5B2EA000CEBA1 /* GithubService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubService.swift; sourceTree = "<group>"; };
+		482DAD6819F5BB83000CEBA1 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReposViewController.swift; sourceTree = "<group>"; };
+		482DAD6A19F5C4A3000CEBA1 /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */,
+				482DAD6819F5BB83000CEBA1 /* ReposViewController.swift */,
 			);
 			name = "Controller Layer";
 			sourceTree = "<group>";
@@ -138,6 +143,7 @@
 		482DAD6219F5AB5B000CEBA1 /* Model Layer */ = {
 			isa = PBXGroup;
 			children = (
+				482DAD6A19F5C4A3000CEBA1 /* Repo.swift */,
 			);
 			name = "Model Layer";
 			sourceTree = "<group>";
@@ -252,6 +258,8 @@
 			files = (
 				482DAD3E19F59FBE000CEBA1 /* AppDelegate.swift in Sources */,
 				482DAD4119F59FBF000CEBA1 /* GithubToGo.xcdatamodeld in Sources */,
+				482DAD6919F5BB83000CEBA1 /* ReposViewController.swift in Sources */,
+				482DAD6B19F5C4A3000CEBA1 /* Repo.swift in Sources */,
 				482DAD6719F5B2EA000CEBA1 /* GithubService.swift in Sources */,
 				482DAD6419F5AB8A000CEBA1 /* SplitContainerViewController.swift in Sources */,
 			);
