@@ -13,6 +13,7 @@
 		482DAD4819F59FBF000CEBA1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 482DAD4719F59FBF000CEBA1 /* Images.xcassets */; };
 		482DAD4B19F59FBF000CEBA1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482DAD4919F59FBF000CEBA1 /* LaunchScreen.xib */; };
 		482DAD5719F59FBF000CEBA1 /* GithubToGoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD5619F59FBF000CEBA1 /* GithubToGoTests.swift */; };
+		482DAD6419F5AB8A000CEBA1 /* SplitContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		482DAD5019F59FBF000CEBA1 /* GithubToGoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubToGoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		482DAD5519F59FBF000CEBA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		482DAD5619F59FBF000CEBA1 /* GithubToGoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubToGoTests.swift; sourceTree = "<group>"; };
+		482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,9 @@
 		482DAD3A19F59FBE000CEBA1 /* GithubToGo */ = {
 			isa = PBXGroup;
 			children = (
+				482DAD6019F5AB32000CEBA1 /* Controller Layer */,
+				482DAD6219F5AB5B000CEBA1 /* Model Layer */,
+				482DAD6119F5AB52000CEBA1 /* View Layer */,
 				482DAD3D19F59FBE000CEBA1 /* AppDelegate.swift */,
 				482DAD4419F59FBF000CEBA1 /* Main.storyboard */,
 				482DAD4719F59FBF000CEBA1 /* Images.xcassets */,
@@ -110,6 +115,28 @@
 				482DAD5519F59FBF000CEBA1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		482DAD6019F5AB32000CEBA1 /* Controller Layer */ = {
+			isa = PBXGroup;
+			children = (
+				482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */,
+			);
+			name = "Controller Layer";
+			sourceTree = "<group>";
+		};
+		482DAD6119F5AB52000CEBA1 /* View Layer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View Layer";
+			sourceTree = "<group>";
+		};
+		482DAD6219F5AB5B000CEBA1 /* Model Layer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Model Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +241,7 @@
 			files = (
 				482DAD3E19F59FBE000CEBA1 /* AppDelegate.swift in Sources */,
 				482DAD4119F59FBF000CEBA1 /* GithubToGo.xcdatamodeld in Sources */,
+				482DAD6419F5AB8A000CEBA1 /* SplitContainerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
