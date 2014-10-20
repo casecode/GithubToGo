@@ -139,7 +139,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyD-Qj-wik">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyD-Qj-wik">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <connections>
                                     <segue destination="BPN-5h-i5V" kind="embed" id="4yz-v9-k79"/>
@@ -147,6 +147,12 @@
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="lyD-Qj-wik" secondAttribute="trailing" constant="-16" id="MAE-X8-VoH"/>
+                            <constraint firstItem="lyD-Qj-wik" firstAttribute="top" secondItem="xEc-wV-ctM" secondAttribute="topMargin" id="Xkh-SF-VdU"/>
+                            <constraint firstItem="lyD-Qj-wik" firstAttribute="leading" secondItem="xEc-wV-ctM" secondAttribute="leadingMargin" constant="-16" id="aRc-c4-diZ"/>
+                            <constraint firstItem="3Lr-z3-9dm" firstAttribute="top" secondItem="lyD-Qj-wik" secondAttribute="bottom" id="sYD-jx-Czt"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vm7-jg-nn8" userLabel="First Responder" sceneMemberID="firstResponder"/>
