@@ -17,6 +17,8 @@
 		482DAD6719F5B2EA000CEBA1 /* GithubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6619F5B2EA000CEBA1 /* GithubService.swift */; };
 		482DAD6919F5BB83000CEBA1 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6819F5BB83000CEBA1 /* ReposViewController.swift */; };
 		482DAD6B19F5C4A3000CEBA1 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6A19F5C4A3000CEBA1 /* Repo.swift */; };
+		482DAD6D19F6B152000CEBA1 /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6C19F6B152000CEBA1 /* RepoCell.swift */; };
+		482DAD6F19F6B178000CEBA1 /* RepoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482DAD6E19F6B178000CEBA1 /* RepoCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		482DAD6619F5B2EA000CEBA1 /* GithubService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubService.swift; sourceTree = "<group>"; };
 		482DAD6819F5BB83000CEBA1 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReposViewController.swift; sourceTree = "<group>"; };
 		482DAD6A19F5C4A3000CEBA1 /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
+		482DAD6C19F6B152000CEBA1 /* RepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
+		482DAD6E19F6B178000CEBA1 /* RepoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepoCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,8 @@
 		482DAD6119F5AB52000CEBA1 /* View Layer */ = {
 			isa = PBXGroup;
 			children = (
+				482DAD6C19F6B152000CEBA1 /* RepoCell.swift */,
+				482DAD6E19F6B178000CEBA1 /* RepoCell.xib */,
 			);
 			name = "View Layer";
 			sourceTree = "<group>";
@@ -239,6 +245,7 @@
 				482DAD4619F59FBF000CEBA1 /* Main.storyboard in Resources */,
 				482DAD4B19F59FBF000CEBA1 /* LaunchScreen.xib in Resources */,
 				482DAD4819F59FBF000CEBA1 /* Images.xcassets in Resources */,
+				482DAD6F19F6B178000CEBA1 /* RepoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				482DAD3E19F59FBE000CEBA1 /* AppDelegate.swift in Sources */,
+				482DAD6D19F6B152000CEBA1 /* RepoCell.swift in Sources */,
 				482DAD4119F59FBF000CEBA1 /* GithubToGo.xcdatamodeld in Sources */,
 				482DAD6919F5BB83000CEBA1 /* ReposViewController.swift in Sources */,
 				482DAD6B19F5C4A3000CEBA1 /* Repo.swift in Sources */,
@@ -455,6 +463,7 @@
 				482DAD5C19F59FBF000CEBA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		482DAD5D19F59FBF000CEBA1 /* Build configuration list for PBXNativeTarget "GithubToGoTests" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +472,7 @@
 				482DAD5F19F59FBF000CEBA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

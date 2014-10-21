@@ -117,7 +117,7 @@
         <!--Repos View Controller-->
         <scene sceneID="5LC-g0-oMw">
             <objects>
-                <viewController id="tXE-9E-EGa" customClass="ReposViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="tXE-9E-EGa" customClass="ReposViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="59T-YU-hcE"/>
                         <viewControllerLayoutGuide type="bottom" id="H57-bT-d46"/>
@@ -126,23 +126,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ReposVC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="610-8v-y5g">
-                                <rect key="frame" x="264" y="289" width="73" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="73" id="LWc-tf-DwR"/>
-                                    <constraint firstAttribute="height" constant="21" id="T6W-5i-vra"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yvw-Ps-BX7">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="tXE-9E-EGa" id="G2j-aK-1N7"/>
+                                    <outlet property="delegate" destination="tXE-9E-EGa" id="T1O-aV-OHJ"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="610-8v-y5g" secondAttribute="centerY" id="0db-mK-7Cg"/>
-                            <constraint firstAttribute="centerX" secondItem="610-8v-y5g" secondAttribute="centerX" id="NMb-fh-MPg"/>
+                            <constraint firstItem="H57-bT-d46" firstAttribute="top" secondItem="yvw-Ps-BX7" secondAttribute="bottom" id="C2j-f7-NwP"/>
+                            <constraint firstItem="yvw-Ps-BX7" firstAttribute="leading" secondItem="9qv-zB-lHJ" secondAttribute="leadingMargin" constant="-16" id="MHi-P2-ZQt"/>
+                            <constraint firstItem="yvw-Ps-BX7" firstAttribute="top" secondItem="59T-YU-hcE" secondAttribute="bottom" id="Rsy-TI-l6b"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yvw-Ps-BX7" secondAttribute="trailing" constant="-16" id="xgc-hv-CCd"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="yvw-Ps-BX7" id="JFS-Kk-eE9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wRY-IH-7L0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
