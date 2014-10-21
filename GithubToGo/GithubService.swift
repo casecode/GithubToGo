@@ -27,7 +27,7 @@ class GithubService {
         let dataTask = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
             if let repos = self.parseJSONDataIntoRepos(data) {
                 for repo in repos {
-                    println(repo.full_name)
+                    NSLog("LAST UPDATED: %@", repo.last_updated)
                 }
             }
         })
