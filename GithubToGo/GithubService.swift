@@ -10,6 +10,13 @@ import Foundation
 
 class GithubService {
     
+    class var sharedInstance : GithubService {
+        struct Static {
+            static let instance : GithubService = GithubService()
+        }
+        return Static.instance
+    }
+    
     func fetchRepos(#urlString: String, queryParams: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
         println("HELLO")
         var builtUrl = urlString

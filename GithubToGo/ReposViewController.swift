@@ -14,7 +14,7 @@ class ReposViewController: UIViewController {
         super.viewDidLoad()
 
         let url = "http://127.0.0.1:3000"
-        let ghService = GithubService()
+        let ghService = GithubService.sharedInstance
 
         ghService.fetchRepos(urlString: url, queryParams: nil) { (repos, errorMessage) -> Void in
             if errorMessage == nil {
