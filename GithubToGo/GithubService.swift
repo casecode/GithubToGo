@@ -10,7 +10,7 @@ import Foundation
 
 class GithubService {
     
-    func fetchRepos(#urlString: String, queryParams: [String : String]?) {
+    func fetchRepos(#urlString: String, queryParams: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
         println("HELLO")
         var builtUrl = urlString
         if let params = queryParams {
@@ -25,11 +25,36 @@ class GithubService {
         let url = NSURL(string: builtUrl)
         
         let dataTask = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
-            if let repos = self.parseJSONDataIntoRepos(data) {
-                for repo in repos {
-                    NSLog("LAST UPDATED: %@", repo.last_updated)
+
+            var repos: [Repo]?
+            var errorMessage: String?
+            
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if error == nil {
+                    switch httpResponse.statusCode {
+                    case 200...299:
+                        if let repoObjects = self.parseJSONDataIntoRepos(data) {
+                            repos = repoObjects
+                        } else {
+                            errorMessage = "Unable to parse JSON data"
+                        }
+                    case 400...499:
+                        errorMessage = "Bad request"
+                    case 500...599:
+                        errorMessage = "Server error"
+                    default:
+                        errorMessage = "Unknown error"
+                    }
+                } else {
+                    errorMessage = "ERROR: \(error.localizedDescription as String)"
                 }
+            } else {
+                errorMessage = "Reqest unsuccesful"
             }
+
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                completion(repos: repos, errorMessage: errorMessage)
+            })
         })
         
         dataTask.resume()
