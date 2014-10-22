@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 casecode. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class GithubService {
     
@@ -17,8 +17,65 @@ class GithubService {
         return Static.instance
     }
     
+    let clientID = "client_id=5ea1a02e038fcbe67b93"
+    let clientSecret = "client_secret=d2935c2b120db0495e88dfb528b0744ad456a978"
+    let githubOAuthURL = "https://github.com/login/oauth/authorize?"
+    let scope = "scope=user,repo"
+    let redirectURL = "redirect_uri=githubtogo://path"
+    let githubPOSTURL = "https://github.com/login/oauth/access_token"
+    
+    var session: NSURLSession!
+    
+    func requestOAuthAccess() {
+        let url = githubOAuthURL + clientID + "&" + redirectURL + "&" + scope
+        println(url)
+        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+    }
+    
+    func handleOAuthURL(callbackURL : NSURL) {
+        //parse through the url that given to us by Github
+        let query = callbackURL.query
+        let components = query?.componentsSeparatedByString("code=")
+        let code = components?.last
+        println(code)
+        //constructing the query string for the final POST call
+        let urlQuery = clientID + "&" + clientSecret + "&" + "code=\(code!)"
+        var request = NSMutableURLRequest(URL: NSURL(string: githubPOSTURL)!)
+        request.HTTPMethod = "POST"
+        var postData = urlQuery.dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)
+        let length = postData!.length
+        request.setValue("\(length)", forHTTPHeaderField: "Content-Length")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = postData
+        
+        let dataTask: Void = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            
+            if error != nil {
+                println("Hello this is an error")
+            } else {
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    switch httpResponse.statusCode {
+                    case 200...204:
+                        let tokenResponse = NSString(data: data, encoding: NSASCIIStringEncoding)
+                        let components = tokenResponse?.componentsSeparatedByString("&")
+                        let accessToken = components?.first as? String
+                        let accessTokenComponents = accessToken?.componentsSeparatedByString("access_token=")
+                        let token = accessTokenComponents?.last
+                        println(token!)
+                        
+                        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                        configuration.HTTPAdditionalHeaders = ["Authorization" : "token \(token!)"]
+                        self.session = NSURLSession(configuration: configuration)
+                    default:
+                        println("default case on status code")
+                    }
+                }
+            }
+        }).resume()
+    }
+    
     func fetchRepos(#urlString: String, queryParams: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
-        println("HELLO")
+        
         var builtUrl = urlString
         if let params = queryParams {
             builtUrl += "?"
@@ -27,11 +84,9 @@ class GithubService {
             }
         }
         
-        println(builtUrl)
-        
         let url = NSURL(string: builtUrl)
         
-        let dataTask = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
+        let dataTask = self.session.dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
 
             var repos: [Repo]?
             var errorMessage: String?
@@ -56,7 +111,7 @@ class GithubService {
                     errorMessage = "ERROR: \(error.localizedDescription as String)"
                 }
             } else {
-                errorMessage = "Reqest unsuccesful"
+                errorMessage = "Request unsuccessful"
             }
 
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
@@ -87,4 +142,5 @@ class GithubService {
             return nil
         }
     }
+    
 }

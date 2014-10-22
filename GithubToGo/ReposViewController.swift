@@ -25,6 +25,8 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         ghService.fetchRepos(urlString: url, queryParams: nil) { (repos, errorMessage) -> Void in
             if errorMessage == nil {
                 println("Fetch Successful")
+            } else {
+                println(errorMessage)
             }
         }
     }
