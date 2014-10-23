@@ -17,7 +17,7 @@ class SplitContainerViewController: UIViewController, UISplitViewControllerDeleg
         splitVC.delegate = self
         
         let ghService = GithubService.sharedInstance
-        ghService.requestOAuthAccess()
+        // ghService.requestOAuthAccess()
     }
     
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController!, ontoPrimaryViewController primaryViewController: UIViewController!) -> Bool {

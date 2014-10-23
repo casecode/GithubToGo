@@ -8,9 +8,13 @@
 
 import UIKit
 
-class ReposViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ReposViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
+    @IBOutlet weak var repoSearchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    
+    let ghService = GithubService.sharedInstance
+    var searchResults: [Repo]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +26,13 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         let url = "http://127.0.0.1:3000"
         let ghService = GithubService.sharedInstance
 
-        ghService.fetchRepos(urlString: url, queryParams: nil) { (repos, errorMessage) -> Void in
-            if errorMessage == nil {
-                println("Fetch Successful")
-            } else {
-                println(errorMessage)
-            }
-        }
+//        ghService.fetchRepos(urlString: url, queryParams: nil) { (repos, errorMessage) -> Void in
+//            if errorMessage == nil {
+//                println("Fetch Successful")
+//            } else {
+//                println(errorMessage)
+//            }
+//        }
     }
     
     // MARK: - UITableViewDataSource
@@ -39,5 +43,11 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("REPO_CELL") as RepoCell
         return cell
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+//        self.ghService
+        println(searchBar.text)
     }
 }
