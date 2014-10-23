@@ -22,8 +22,14 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Register Repo Cell Nib
         let repoCellNib = UINib(nibName: "RepoCell", bundle: NSBundle.mainBundle())
         self.tableView.registerNib(repoCellNib!, forCellReuseIdentifier: "REPO_CELL")
-
-        self.ghService.requestOAuthAccess()
+        
+        if self.ghService.sessionAuthenticated() {
+            println("Session authenticated")
+        } else {
+            println("Requesting oauth access")
+            // Add alert
+            self.ghService.requestOAuthAccess()
+        }
     }
     
     // MARK: - UITableViewDataSource

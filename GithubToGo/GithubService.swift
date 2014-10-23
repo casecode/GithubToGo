@@ -24,26 +24,38 @@ class GithubService {
     let scope = "scope=user,repo"
     let redirectURL = "redirect_uri=githubtogo://path"
     let githubPOSTURL = "https://github.com/login/oauth/access_token"
+    let tokenKey = "GithubAccessToken"
     
     var authenticatedSession: NSURLSession!
     
+    func sessionAuthenticated() -> Bool {
+        if self.authenticatedSession != nil {
+            return true
+        } else if let token = self.retrieveStoredToken() {
+            self.configureAuthenticatedSessionWithToken(token)
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // MARK: - OAuth
     func requestOAuthAccess() {
         let url = githubOAuthURL + clientID + "&" + redirectURL + "&" + scope
-        println(url)
         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
     }
     
     func handleOAuthURL(callbackURL : NSURL) {
-        //parse through the url that given to us by Github
+        // Parse callbackURL from Github
         let query = callbackURL.query
         let components = query?.componentsSeparatedByString("code=")
         let code = components?.last
-        println(code)
-        //constructing the query string for the final POST call
+
+        // Construct query for final POST request
         let urlQuery = clientID + "&" + clientSecret + "&" + "code=\(code!)"
         var request = NSMutableURLRequest(URL: NSURL(string: githubPOSTURL)!)
         request.HTTPMethod = "POST"
-        var postData = urlQuery.dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)
+        let postData = urlQuery.dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)
         let length = postData!.length
         request.setValue("\(length)", forHTTPHeaderField: "Content-Length")
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -62,19 +74,33 @@ class GithubService {
                         let accessToken = components?.first as? String
                         let accessTokenComponents = accessToken?.componentsSeparatedByString("access_token=")
                         let token = accessTokenComponents?.last
-                        println(token!)
                         
-                        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-                        configuration.HTTPAdditionalHeaders = ["Authorization" : "token \(token!)"]
-                        self.authenticatedSession = NSURLSession(configuration: configuration)
+                        NSUserDefaults.standardUserDefaults().setObject(token!, forKey: self.tokenKey)
+                        NSUserDefaults.standardUserDefaults().synchronize()
+                        self.configureAuthenticatedSessionWithToken(token!)
                     default:
-                        println("default case on status code")
+                        println("Token request failed")
                     }
                 }
             }
         }).resume()
     }
     
+    func retrieveStoredToken() -> String? {
+        if let token = NSUserDefaults.standardUserDefaults().valueForKey(self.tokenKey) as? String {
+            return token
+        } else {
+            return nil
+        }
+    }
+    
+    func configureAuthenticatedSessionWithToken(token: String) {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.HTTPAdditionalHeaders = ["Authorization" : "token \(token)"]
+        self.authenticatedSession = NSURLSession(configuration: configuration)
+    }
+    
+    // MARK: - API Requests
     func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
         
         var builtUrl = self.apiURL
@@ -132,6 +158,7 @@ class GithubService {
         }).resume()
     }
     
+    // MARK: - JSON Response Parsing
     func parseJSONDataIntoRepos(rawData: NSData) -> [Repo]? {
         var error: NSError?
         if let data = NSJSONSerialization.JSONObjectWithData(rawData, options: nil, error: &error) as? NSDictionary {
