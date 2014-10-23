@@ -17,6 +17,7 @@ class GithubService {
         return Static.instance
     }
     
+    let apiURL = "https://api.github.com"
     let clientID = "client_id=5ea1a02e038fcbe67b93"
     let clientSecret = "client_secret=d2935c2b120db0495e88dfb528b0744ad456a978"
     let githubOAuthURL = "https://github.com/login/oauth/authorize?"
@@ -24,7 +25,7 @@ class GithubService {
     let redirectURL = "redirect_uri=githubtogo://path"
     let githubPOSTURL = "https://github.com/login/oauth/access_token"
     
-    var session: NSURLSession!
+    var authenticatedSession: NSURLSession!
     
     func requestOAuthAccess() {
         let url = githubOAuthURL + clientID + "&" + redirectURL + "&" + scope
@@ -65,7 +66,7 @@ class GithubService {
                         
                         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
                         configuration.HTTPAdditionalHeaders = ["Authorization" : "token \(token!)"]
-                        self.session = NSURLSession(configuration: configuration)
+                        self.authenticatedSession = NSURLSession(configuration: configuration)
                     default:
                         println("default case on status code")
                     }
@@ -74,19 +75,30 @@ class GithubService {
         }).resume()
     }
     
-    func fetchRepos(#urlString: String, queryParams: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
+    func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
         
-        var builtUrl = urlString
-        if let params = queryParams {
+        var builtUrl = self.apiURL
+        if let resourcePath = path {
+            builtUrl += resourcePath
+        }
+        if let queryParams = params {
             builtUrl += "?"
-            for (k,v) in params {
+            let paramCount = queryParams.count
+            var i = 0
+            for (k,v) in queryParams {
+                ++i
                 builtUrl += "\(k)=\(v)"
+                if i < paramCount {
+                    builtUrl += "&"
+                }
             }
         }
         
+        println(builtUrl)
+        
         let url = NSURL(string: builtUrl)
         
-        let dataTask = self.session.dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
+        let dataTask: Void = self.authenticatedSession.dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
 
             var repos: [Repo]?
             var errorMessage: String?
@@ -117,9 +129,7 @@ class GithubService {
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 completion(repos: repos, errorMessage: errorMessage)
             })
-        })
-        
-        dataTask.resume()
+        }).resume()
     }
     
     func parseJSONDataIntoRepos(rawData: NSData) -> [Repo]? {

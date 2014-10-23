@@ -23,16 +23,7 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         let repoCellNib = UINib(nibName: "RepoCell", bundle: NSBundle.mainBundle())
         self.tableView.registerNib(repoCellNib!, forCellReuseIdentifier: "REPO_CELL")
 
-        let url = "http://127.0.0.1:3000"
-        let ghService = GithubService.sharedInstance
-
-//        ghService.fetchRepos(urlString: url, queryParams: nil) { (repos, errorMessage) -> Void in
-//            if errorMessage == nil {
-//                println("Fetch Successful")
-//            } else {
-//                println(errorMessage)
-//            }
-//        }
+        self.ghService.requestOAuthAccess()
     }
     
     // MARK: - UITableViewDataSource
@@ -47,7 +38,14 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-//        self.ghService
-        println(searchBar.text)
+        
+        let searchString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil) as String
+        let resourcePath = "/search/repositories"
+        let params = ["q" : searchString]
+        self.ghService.fetchRepos(atResourcePath: resourcePath, withParams: params) { (repos, errorMessage) -> Void in
+            if let repoResults = repos {
+                println(repoResults.count.description)
+            }
+        }
     }
 }
