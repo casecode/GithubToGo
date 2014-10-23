@@ -101,7 +101,7 @@ class GithubService {
     }
     
     // MARK: - API Requests
-    func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (repos: [Repo]?, errorMessage: String?) -> Void) {
+    func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (repoResults: [Repo]?, errorMessage: String?) -> Void) {
         
         var builtUrl = self.apiURL
         if let resourcePath = path {
@@ -153,7 +153,7 @@ class GithubService {
             }
 
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                completion(repos: repos, errorMessage: errorMessage)
+                completion(repoResults: repos, errorMessage: errorMessage)
             })
         }).resume()
     }

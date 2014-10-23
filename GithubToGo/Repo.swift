@@ -14,6 +14,7 @@ class Repo {
     let full_name: String
     let html_url: String
     let setToPrivate: Bool
+    let summary: String
     let created_at: NSDate
     let last_updated: NSDate
     let owner_username: String
@@ -24,6 +25,7 @@ class Repo {
         self.full_name = data["full_name"] as String
         self.html_url = data["html_url"] as String
         self.setToPrivate = data["private"] as Bool
+        self.summary = data["description"] as String
         
         // Set NSDate properties
         let createdAtUnformatted = data["created_at"] as String
