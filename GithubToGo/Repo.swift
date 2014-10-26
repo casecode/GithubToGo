@@ -6,24 +6,25 @@
 //  Copyright (c) 2014 casecode. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Repo {
     
     let name: String
-    let full_name: String
-    let html_url: String
+    let fullName: String
+    let htmlURL: String
     let setToPrivate: Bool
     let summary: String
-    let created_at: NSDate
-    let last_updated: NSDate
-    let owner_username: String
-    let owner_avatar_url: String
+    let createdAt: NSDate
+    let lastUpdated: NSDate
+    let ownerUsername: String
+    let ownerAvatarURL: String
+    var ownerAvatarImage: UIImage?
     
     init(data: NSDictionary) {
         self.name = data["name"] as String
-        self.full_name = data["full_name"] as String
-        self.html_url = data["html_url"] as String
+        self.fullName = data["full_name"] as String
+        self.htmlURL = data["html_url"] as String
         self.setToPrivate = data["private"] as Bool
         self.summary = data["description"] as String
         
@@ -32,12 +33,12 @@ class Repo {
         let lastUpdatedUnformatted = data["updated_at"] as String
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        self.created_at = dateFormatter.dateFromString(createdAtUnformatted)!
-        self.last_updated = dateFormatter.dateFromString(lastUpdatedUnformatted)!
+        self.createdAt = dateFormatter.dateFromString(createdAtUnformatted)!
+        self.lastUpdated = dateFormatter.dateFromString(lastUpdatedUnformatted)!
         
         let ownerData = data["owner"] as NSDictionary
-        self.owner_username = ownerData["login"] as String
-        self.owner_avatar_url = ownerData["avatar_url"] as String
+        self.ownerUsername = ownerData["login"] as String
+        self.ownerAvatarURL = ownerData["avatar_url"] as String
     }
     
 }

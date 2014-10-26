@@ -27,6 +27,8 @@ class GithubService {
     let tokenKey = "GithubAccessToken"
     
     var authenticatedSession: NSURLSession!
+    let imageQueue = NSOperationQueue()
+    var imageCache = [String : UIImage]()
     
     func sessionAuthenticated() -> Bool {
         if self.authenticatedSession != nil {
@@ -125,7 +127,9 @@ class GithubService {
         let url = NSURL(string: builtUrl)
         
         let dataTask: Void = self.authenticatedSession.dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
-
+            
+            println("Request made")
+            
             var repos: [Repo]?
             var errorMessage: String?
             
@@ -180,4 +184,46 @@ class GithubService {
         }
     }
     
+    func downloadOwnerAvatarForRepo(repo: Repo, completionHandler: (errorMessage: String?, avatarImage: UIImage?) -> ()) {
+        
+        self.imageQueue.addOperationWithBlock { () -> Void in
+            var errorMessage: String?, image: UIImage?
+            // If repo already has an image, use that image
+            if let ownerAvatar = repo.ownerAvatarImage
+            {
+                println("Using image from repo")
+                
+                image = ownerAvatar
+            }
+            // If owner's image already in cache, do not download again
+            else if let ownerAvatar = self.imageCache[repo.ownerUsername]
+            {
+                println("Using image from image cache")
+                
+                image = ownerAvatar
+                repo.ownerAvatarImage = image
+            }
+            // Otherwise, download image and add it to the repo and the cache for that owner
+            else
+            {
+                println("Downloading image")
+                
+                let url = NSURL(string: repo.ownerAvatarURL)
+                let imageData = NSData(contentsOfURL: url!)
+                
+                if imageData!.length > 0 {
+                    image = UIImage(data: imageData!)
+                    repo.ownerAvatarImage = image
+                    self.imageCache[repo.ownerUsername] = image
+                } else {
+                    errorMessage = "No image found"
+                }
+            }
+            // Resolve completion handler on main queue
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                completionHandler(errorMessage: errorMessage, avatarImage: image)
+            })
+        }
+    }
+
 }

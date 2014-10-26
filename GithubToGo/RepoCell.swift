@@ -10,14 +10,16 @@ import UIKit
 
 class RepoCell: UITableViewCell {
     
-    @IBOutlet weak var repoOwnerImageView: UIView!
+    @IBOutlet weak var repoOwnerImageView: UIImageView!
     @IBOutlet weak var repoNameLabel: UILabel!
-    @IBOutlet weak var repoSummaryLabel: UILabel!
+    @IBOutlet weak var repoOwnerNameLabel: UILabel!
     @IBOutlet weak var repoLastUpdatedLabel: UILabel!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.repoOwnerImageView.layer.cornerRadius = 8.0
+        self.repoOwnerImageView.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -25,5 +27,4 @@ class RepoCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }
