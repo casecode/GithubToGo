@@ -47,6 +47,16 @@ class RepoSearchViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
+    // MARK: - UITableViewDelegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let repo = self.repos[indexPath.row]
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let repoWebVC = storyboard.instantiateViewControllerWithIdentifier("REPO_WEBVIEW_VC") as RepoWebViewController
+        repoWebVC.targetURL = repo.htmlURL
+        self.navigationController?.pushViewController(repoWebVC, animated: true)
+    }
+    
     // MARK: - SearchBar
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
