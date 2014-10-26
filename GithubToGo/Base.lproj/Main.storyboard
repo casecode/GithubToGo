@@ -280,10 +280,21 @@
                                     <constraint firstAttribute="height" constant="200" id="jKp-Gu-D8p"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFf-eu-epq">
+                                <rect key="frame" x="77" y="280" width="79" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="6B2-v3-5qH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JKz-Eg-4Db" firstAttribute="leading" secondItem="hic-DU-Z5c" secondAttribute="leadingMargin" id="3y4-IW-Fdi"/>
+                            <constraint firstItem="RFf-eu-epq" firstAttribute="centerX" secondItem="JKz-Eg-4Db" secondAttribute="centerX" constant="0.5" id="6D5-sG-8pa"/>
+                            <constraint firstItem="RFf-eu-epq" firstAttribute="top" secondItem="JKz-Eg-4Db" secondAttribute="bottom" constant="8" id="HRX-P8-unB"/>
                             <constraint firstItem="JKz-Eg-4Db" firstAttribute="top" secondItem="JQs-j9-Ep3" secondAttribute="bottom" constant="8" id="faR-lD-LaQ"/>
                         </constraints>
                     </view>

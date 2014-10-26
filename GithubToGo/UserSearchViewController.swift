@@ -8,13 +8,14 @@
 
 import UIKit
 
-class UserSearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
+class UserSearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var userSearchBar: UISearchBar!
 
     let ghService = GithubService.sharedInstance
     var users = [User]()
+    var selectedAvatarStartingPosition: CGRect?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,8 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
             // Add alert
             self.ghService.requestOAuthAccess()
         }
+        
+        self.navigationController?.delegate = self
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -42,9 +45,17 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let user = self.users[indexPath.row]
-        let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("SINGLE_USER_VC") as UserViewController
-        destinationVC.user = user
-        self.navigationController?.pushViewController(destinationVC, animated: true)
+        
+        // Grab the attributes of the cell selected
+        let attributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)
+        let position = self.view.convertRect(attributes!.frame, fromView: collectionView)
+        self.selectedAvatarStartingPosition = position
+        
+        // Push UserVC onto stack
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let userVC = storyboard.instantiateViewControllerWithIdentifier("SINGLE_USER_VC") as UserViewController
+        userVC.user = user
+        self.navigationController?.pushViewController(userVC, animated: true)
     }
     
     // MARK: - SearchBar
@@ -88,6 +99,17 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
                 cellForImage?.userAvatarImageView.image = avatarImage
             }
         })
+    }
+    
+    // MARK: - UINavigationControllerDelegate
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if let userSearchVC = fromVC as? UserSearchViewController {
+            let animator = ShowUserAnimator()
+            animator.avatarStartingPosition = self.selectedAvatarStartingPosition
+            return animator
+        }
+        return nil
     }
 
 }
