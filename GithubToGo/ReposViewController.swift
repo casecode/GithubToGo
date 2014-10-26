@@ -47,7 +47,7 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
-    // Mark: - SearchBar
+    // MARK: - SearchBar
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let searchString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil) as String
@@ -57,6 +57,11 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.fetchReposWithSearchQuery(searchString)
     }
     
+    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        return text.validate()
+    }
+    
+    // MARK: - Repo Fetch
     func fetchReposWithSearchQuery(searchQuery: String) {
         let repoSearchResourcePath = "/search/repositories"
         let params = ["q" : searchQuery]
@@ -80,7 +85,8 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
     func configureCell(cell: RepoCell, atIndexPath indexPath: NSIndexPath, withRepo repo: Repo) {
         cell.repoNameLabel.text = repo.name
         cell.repoOwnerNameLabel.text = repo.ownerUsername
-        cell.repoLastUpdatedLabel.text = self.convertDateToString(repo.lastUpdated)
+        let dateDisplayFormat = "MM/dd/yyyy 'at' h:mm a"
+        cell.repoLastUpdatedLabel.text = repo.lastUpdated.convertToStringWithFormat(dateDisplayFormat)
         
         // Grab owner image for cell
         self.ghService.downloadOwnerAvatarForRepo(repo, completionHandler: { (errorMessage, avatarImage) -> () in
@@ -91,11 +97,5 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
                 cellForImage?.repoOwnerImageView.image = avatarImage
             }
         })
-    }
-    
-    func convertDateToString(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy 'at' h:mm a"
-        return dateFormatter.stringFromDate(date)
     }
 }
