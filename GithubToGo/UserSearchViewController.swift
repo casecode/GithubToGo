@@ -27,8 +27,6 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
             // Add alert
             self.ghService.requestOAuthAccess()
         }
-        
-        self.navigationController?.delegate = self
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -44,6 +42,7 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.navigationController?.delegate = self
         let user = self.users[indexPath.row]
         
         // Grab the attributes of the cell selected
@@ -56,6 +55,7 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
         let userVC = storyboard.instantiateViewControllerWithIdentifier("SINGLE_USER_VC") as UserViewController
         userVC.user = user
         self.navigationController?.pushViewController(userVC, animated: true)
+        self.navigationController?.delegate = nil
     }
     
     // MARK: - SearchBar
