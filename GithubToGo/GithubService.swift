@@ -28,7 +28,7 @@ class GithubService {
     
     var authenticatedSession: NSURLSession!
     let imageQueue = NSOperationQueue()
-    var imageCache = [String : UIImage]()
+    var imageCache = [Int : UIImage]()
     
     func sessionAuthenticated() -> Bool {
         if self.authenticatedSession != nil {
@@ -102,33 +102,12 @@ class GithubService {
         self.authenticatedSession = NSURLSession(configuration: configuration)
     }
     
-    // MARK: - API Requests
+    // MARK: - Fetch Requests
     func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (repoResults: [Repo]?, errorMessage: String?) -> Void) {
         
-        var builtUrl = self.apiURL
-        if let resourcePath = path {
-            builtUrl += resourcePath
-        }
-        if let queryParams = params {
-            builtUrl += "?"
-            let paramCount = queryParams.count
-            var i = 0
-            for (k,v) in queryParams {
-                ++i
-                builtUrl += "\(k)=\(v)"
-                if i < paramCount {
-                    builtUrl += "&"
-                }
-            }
-        }
+        let url = self.buildURL(resourcePath: path, withParams: params)
         
-        println(builtUrl)
-        
-        let url = NSURL(string: builtUrl)
-        
-        let dataTask: Void = self.authenticatedSession.dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
-            
-            println("Request made")
+        let dataTask: Void = self.authenticatedSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
             var repos: [Repo]?
             var errorMessage: String?
@@ -161,6 +140,68 @@ class GithubService {
             })
         }).resume()
     }
+
+    func fetchUsers(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (userResults: [User]?, errorMessage: String?) -> Void) {
+        
+        let url = self.buildURL(resourcePath: path, withParams: params)
+        
+        let dataTask: Void = self.authenticatedSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            
+            var users: [User]?
+            var errorMessage: String?
+            
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if error == nil {
+                    switch httpResponse.statusCode {
+                    case 200...299:
+                        if let userObjects = self.parseJSONDataIntoUsers(data) {
+                            users = userObjects
+                        } else {
+                            errorMessage = "Unable to parse JSON data"
+                        }
+                    case 400...499:
+                        errorMessage = "Bad request"
+                    case 500...599:
+                        errorMessage = "Server error"
+                    default:
+                        errorMessage = "Unknown error"
+                    }
+                } else {
+                    errorMessage = "ERROR: \(error.localizedDescription as String)"
+                }
+            } else {
+                errorMessage = "Request unsuccessful"
+            }
+            
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                completion(userResults: users, errorMessage: errorMessage)
+            })
+        }).resume()
+    }
+    
+    func buildURL(resourcePath path: String?, withParams params: [String : String]?) -> NSURL {
+        var builtUrl = self.apiURL
+        if let resourcePath = path {
+            builtUrl += resourcePath
+        }
+        
+        if let queryParams = params {
+            builtUrl += "?"
+            let paramCount = queryParams.count
+            var i = 0
+            for (k,v) in queryParams {
+                ++i
+                builtUrl += "\(k)=\(v)"
+                if i < paramCount {
+                    builtUrl += "&"
+                }
+            }
+        }
+        
+        println(builtUrl)
+        let url = NSURL(string: builtUrl)
+        return url!
+    }
     
     // MARK: - JSON Response Parsing
     func parseJSONDataIntoRepos(rawData: NSData) -> [Repo]? {
@@ -184,44 +225,60 @@ class GithubService {
         }
     }
     
-    func downloadOwnerAvatarForRepo(repo: Repo, completionHandler: (errorMessage: String?, avatarImage: UIImage?) -> ()) {
+    func parseJSONDataIntoUsers(rawData: NSData) -> [User]? {
+        var error: NSError?
+        if let data = NSJSONSerialization.JSONObjectWithData(rawData, options: nil, error: &error) as? NSDictionary {
+            var users = [User]()
+            
+            if let userItems = data["items"] as? NSArray {
+                for userItem in userItems {
+                    if let userData = userItem as? NSDictionary {
+                        let newUser = User(data: userData)
+                        users.append(newUser)
+                    }
+                }
+            }
+            
+            return users
+            
+        } else {
+            return nil
+        }
+    }
+    
+    func downloadAvatarForUser(user: User, completionHandler: (errorMessage: String?, avatarImage: UIImage?) -> ()) {
         
         self.imageQueue.addOperationWithBlock { () -> Void in
-            var errorMessage: String?, image: UIImage?
-            // If repo already has an image, use that image
-            if let ownerAvatar = repo.ownerAvatarImage
+            var errorMessage: String?
+            // If user already has image, use that image
+            if let avatar = user.avatarImage
             {
-                println("Using image from repo")
-                
-                image = ownerAvatar
+                println("Using image from user")
             }
-            // If owner's image already in cache, do not download again
-            else if let ownerAvatar = self.imageCache[repo.ownerUsername]
+                // If image already in cache, do not download again
+            else if let avatar = self.imageCache[user.id]
             {
                 println("Using image from image cache")
-                
-                image = ownerAvatar
-                repo.ownerAvatarImage = image
+                user.avatarImage = avatar
             }
-            // Otherwise, download image and add it to the repo and the cache for that owner
+                // Otherwise, download image
             else
             {
                 println("Downloading image")
                 
-                let url = NSURL(string: repo.ownerAvatarURL)
+                let url = NSURL(string: user.avatarURL)
                 let imageData = NSData(contentsOfURL: url!)
                 
                 if imageData!.length > 0 {
-                    image = UIImage(data: imageData!)
-                    repo.ownerAvatarImage = image
-                    self.imageCache[repo.ownerUsername] = image
+                    user.avatarImage = UIImage(data: imageData!)
+                    self.imageCache[user.id] = user.avatarImage
                 } else {
                     errorMessage = "No image found"
                 }
             }
             // Resolve completion handler on main queue
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                completionHandler(errorMessage: errorMessage, avatarImage: image)
+                completionHandler(errorMessage: errorMessage, avatarImage: user.avatarImage)
             })
         }
     }

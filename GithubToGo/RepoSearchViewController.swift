@@ -1,5 +1,5 @@
 //
-//  ReposViewController.swift
+//  RepoSearchViewController.swift
 //  GithubToGo
 //
 //  Created by Casey R White on 10/20/14.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReposViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class RepoSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var repoSearchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -53,7 +53,7 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
         let searchString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil) as String
         
         // Set display options for tableView and fetch repos
-        setTableViewDisplayOptions()
+        self.setTableViewDisplayOptions()
         self.fetchReposWithSearchQuery(searchString)
     }
     
@@ -84,12 +84,12 @@ class ReposViewController: UIViewController, UITableViewDataSource, UITableViewD
     // Configure cell's image and text
     func configureCell(cell: RepoCell, atIndexPath indexPath: NSIndexPath, withRepo repo: Repo) {
         cell.repoNameLabel.text = repo.name
-        cell.repoOwnerNameLabel.text = repo.ownerUsername
+        cell.repoOwnerNameLabel.text = repo.owner.login
         let dateDisplayFormat = "MM/dd/yyyy 'at' h:mm a"
         cell.repoLastUpdatedLabel.text = repo.lastUpdated.convertToStringWithFormat(dateDisplayFormat)
         
         // Grab owner image for cell
-        self.ghService.downloadOwnerAvatarForRepo(repo, completionHandler: { (errorMessage, avatarImage) -> () in
+        self.ghService.downloadAvatarForUser(repo.owner, completionHandler: { (errorMessage, avatarImage) -> () in
             if let error = errorMessage {
                 println(error)
             } else {

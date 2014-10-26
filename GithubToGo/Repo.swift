@@ -17,9 +17,10 @@ class Repo {
     let summary: String
     let createdAt: NSDate
     let lastUpdated: NSDate
-    let ownerUsername: String
-    let ownerAvatarURL: String
-    var ownerAvatarImage: UIImage?
+//    let ownerUsername: String
+//    let ownerAvatarURL: String
+//    var ownerAvatarImage: UIImage?
+    let owner: User
     
     init(data: NSDictionary) {
         self.name = data["name"] as String
@@ -37,8 +38,10 @@ class Repo {
         self.lastUpdated = dateFormatter.dateFromString(lastUpdatedUnformatted)!
         
         let ownerData = data["owner"] as NSDictionary
-        self.ownerUsername = ownerData["login"] as String
-        self.ownerAvatarURL = ownerData["avatar_url"] as String
+//        self.ownerUsername = ownerData["login"] as String
+//        self.ownerAvatarURL = ownerData["avatar_url"] as String
+        
+        self.owner = User(data: ownerData)
     }
     
 }

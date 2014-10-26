@@ -99,7 +99,7 @@
         <!--Repos-->
         <scene sceneID="5LC-g0-oMw">
             <objects>
-                <viewController title="Repos" automaticallyAdjustsScrollViewInsets="NO" id="tXE-9E-EGa" customClass="ReposViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Repos" automaticallyAdjustsScrollViewInsets="NO" id="tXE-9E-EGa" customClass="RepoSearchViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="59T-YU-hcE"/>
                         <viewControllerLayoutGuide type="bottom" id="H57-bT-d46"/>
@@ -163,10 +163,10 @@
             </objects>
             <point key="canvasLocation" x="1881" y="-957"/>
         </scene>
-        <!--Users View Controller-->
+        <!--User Search View Controller-->
         <scene sceneID="GBE-wD-t5l">
             <objects>
-                <viewController id="3hd-xm-wNC" customClass="UsersViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3hd-xm-wNC" customClass="UserSearchViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Y3v-L8-Zew"/>
                         <viewControllerLayoutGuide type="bottom" id="fEe-ys-QJf"/>
@@ -233,6 +233,9 @@
                                     <constraint firstAttribute="height" constant="44" id="5YZ-M3-LKY"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="3hd-xm-wNC" id="yjf-ld-jS2"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -251,6 +254,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="2WK-E9-Hg1" id="oex-L1-nV5"/>
+                        <outlet property="userSearchBar" destination="Zq7-Ed-Hd4" id="gz9-vM-7uf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAr-es-nx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
