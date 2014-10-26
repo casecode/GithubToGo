@@ -75,7 +75,7 @@ class RepoSearchViewController: UIViewController, UITableViewDataSource, UITable
     func fetchReposWithSearchQuery(searchQuery: String) {
         let repoSearchResourcePath = "/search/repositories"
         let params = ["q" : searchQuery]
-        self.ghService.fetchRepos(atResourcePath: repoSearchResourcePath, withParams: params) { (repoResults, errorMessage) -> Void in
+        self.ghService.fetchRepos(atResourcePath: repoSearchResourcePath, withParams: params, forUser: nil) { (repoResults, errorMessage) -> Void in
             
             if let repoSearchResults = repoResults {
                 self.repos = repoSearchResults

@@ -21,6 +21,7 @@
 		482DAD6F19F6B178000CEBA1 /* RepoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482DAD6E19F6B178000CEBA1 /* RepoCell.xib */; };
 		486C9D2119FCCFE6005011D3 /* ShowUserAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486C9D2019FCCFE6005011D3 /* ShowUserAnimator.swift */; };
 		486C9D2319FCE891005011D3 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486C9D2219FCE891005011D3 /* WebViewController.swift */; };
+		486C9D2819FD021A005011D3 /* UserRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486C9D2719FD021A005011D3 /* UserRepoCell.swift */; };
 		489DB20619FCAAAC00B7FD55 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DB20519FCAAAC00B7FD55 /* User.swift */; };
 		489DB20819FCC68200B7FD55 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DB20719FCC68200B7FD55 /* UserViewController.swift */; };
 		48D534E019FC8B46007571BC /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D534DF19FC8B46007571BC /* StringExtension.swift */; };
@@ -58,6 +59,7 @@
 		482DAD6E19F6B178000CEBA1 /* RepoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepoCell.xib; sourceTree = "<group>"; };
 		486C9D2019FCCFE6005011D3 /* ShowUserAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowUserAnimator.swift; sourceTree = "<group>"; };
 		486C9D2219FCE891005011D3 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		486C9D2719FD021A005011D3 /* UserRepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepoCell.swift; sourceTree = "<group>"; };
 		489DB20519FCAAAC00B7FD55 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		489DB20719FCC68200B7FD55 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		48D534DF19FC8B46007571BC /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				482DAD6C19F6B152000CEBA1 /* RepoCell.swift */,
 				482DAD6E19F6B178000CEBA1 /* RepoCell.xib */,
 				48D534E619FCA45A007571BC /* UserCell.swift */,
+				486C9D2719FD021A005011D3 /* UserRepoCell.swift */,
 			);
 			name = "View Layer";
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			files = (
 				482DAD3E19F59FBE000CEBA1 /* AppDelegate.swift in Sources */,
 				482DAD6D19F6B152000CEBA1 /* RepoCell.swift in Sources */,
+				486C9D2819FD021A005011D3 /* UserRepoCell.swift in Sources */,
 				489DB20819FCC68200B7FD55 /* UserViewController.swift in Sources */,
 				482DAD4119F59FBF000CEBA1 /* GithubToGo.xcdatamodeld in Sources */,
 				486C9D2119FCCFE6005011D3 /* ShowUserAnimator.swift in Sources */,

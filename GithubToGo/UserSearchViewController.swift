@@ -54,6 +54,7 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let userVC = storyboard.instantiateViewControllerWithIdentifier("SINGLE_USER_VC") as UserViewController
         userVC.user = user
+        userVC.userResourcePath = "/users/\(user.login)/repos"
         self.navigationController?.pushViewController(userVC, animated: true)
         self.navigationController?.delegate = nil
     }

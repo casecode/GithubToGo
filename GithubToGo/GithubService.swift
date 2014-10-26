@@ -103,7 +103,7 @@ class GithubService {
     }
     
     // MARK: - Fetch Requests
-    func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, completionHandler completion: (repoResults: [Repo]?, errorMessage: String?) -> Void) {
+    func fetchRepos(atResourcePath path: String?, withParams params: [String : String]?, forUser user: User?, completionHandler completion: (repoResults: [Repo]?, errorMessage: String?) -> Void) {
         
         let url = self.buildURL(resourcePath: path, withParams: params)
         
@@ -116,10 +116,18 @@ class GithubService {
                 if error == nil {
                     switch httpResponse.statusCode {
                     case 200...299:
-                        if let repoObjects = self.parseJSONDataIntoRepos(data) {
-                            repos = repoObjects
+                        if let requestedUser = user {
+                            if let repoObjects = self.parseJSONDataIntoUserRepos(data, forUser: requestedUser) {
+                                repos = repoObjects
+                            } else {
+                                errorMessage = "Unable to parse JSON data"
+                            }
                         } else {
-                            errorMessage = "Unable to parse JSON data"
+                            if let repoObjects = self.parseJSONDataIntoRepos(data) {
+                                repos = repoObjects
+                            } else {
+                                errorMessage = "Unable to parse JSON data"
+                            }
                         }
                     case 400...499:
                         errorMessage = "Bad request"
@@ -217,6 +225,26 @@ class GithubService {
                     }
                 }
             }
+            
+            return repos
+            
+        } else {
+            return nil
+        }
+    }
+    
+    func parseJSONDataIntoUserRepos(rawData: NSData, forUser user: User) -> [Repo]? {
+        var error: NSError?
+        if let data = NSJSONSerialization.JSONObjectWithData(rawData, options: nil, error: &error) as? NSArray {
+            var repos = [Repo]()
+            
+            for item in data {
+                if let userRepo = item as? NSDictionary {
+                    let newRepo = Repo(data: userRepo, forUser: user)
+                    repos.append(newRepo)
+                }
+            }
+
             
             return repos
             
