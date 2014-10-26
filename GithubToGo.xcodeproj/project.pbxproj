@@ -20,6 +20,7 @@
 		482DAD6D19F6B152000CEBA1 /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482DAD6C19F6B152000CEBA1 /* RepoCell.swift */; };
 		482DAD6F19F6B178000CEBA1 /* RepoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482DAD6E19F6B178000CEBA1 /* RepoCell.xib */; };
 		489DB20619FCAAAC00B7FD55 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DB20519FCAAAC00B7FD55 /* User.swift */; };
+		489DB20819FCC68200B7FD55 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489DB20719FCC68200B7FD55 /* UserViewController.swift */; };
 		48D534E019FC8B46007571BC /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D534DF19FC8B46007571BC /* StringExtension.swift */; };
 		48D534E319FC8D5E007571BC /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D534E219FC8D5E007571BC /* NSDateExtension.swift */; };
 		48D534E519FC9DA2007571BC /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D534E419FC9DA2007571BC /* UserSearchViewController.swift */; };
@@ -54,6 +55,7 @@
 		482DAD6C19F6B152000CEBA1 /* RepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
 		482DAD6E19F6B178000CEBA1 /* RepoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepoCell.xib; sourceTree = "<group>"; };
 		489DB20519FCAAAC00B7FD55 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		489DB20719FCC68200B7FD55 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		48D534DF19FC8B46007571BC /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		48D534E219FC8D5E007571BC /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		48D534E419FC9DA2007571BC /* UserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				482DAD6319F5AB8A000CEBA1 /* SplitContainerViewController.swift */,
 				482DAD6819F5BB83000CEBA1 /* RepoSearchViewController.swift */,
 				48D534E419FC9DA2007571BC /* UserSearchViewController.swift */,
+				489DB20719FCC68200B7FD55 /* UserViewController.swift */,
 			);
 			name = "Controller Layer";
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			files = (
 				482DAD3E19F59FBE000CEBA1 /* AppDelegate.swift in Sources */,
 				482DAD6D19F6B152000CEBA1 /* RepoCell.swift in Sources */,
+				489DB20819FCC68200B7FD55 /* UserViewController.swift in Sources */,
 				482DAD4119F59FBF000CEBA1 /* GithubToGo.xcdatamodeld in Sources */,
 				482DAD6919F5BB83000CEBA1 /* RepoSearchViewController.swift in Sources */,
 				48D534E019FC8B46007571BC /* StringExtension.swift in Sources */,

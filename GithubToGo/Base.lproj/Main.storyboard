@@ -96,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="1152" y="-245"/>
         </scene>
-        <!--Repos-->
+        <!--Repo Search-->
         <scene sceneID="5LC-g0-oMw">
             <objects>
-                <viewController title="Repos" automaticallyAdjustsScrollViewInsets="NO" id="tXE-9E-EGa" customClass="RepoSearchViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Repo Search" automaticallyAdjustsScrollViewInsets="NO" id="tXE-9E-EGa" customClass="RepoSearchViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="59T-YU-hcE"/>
                         <viewControllerLayoutGuide type="bottom" id="H57-bT-d46"/>
@@ -163,10 +163,10 @@
             </objects>
             <point key="canvasLocation" x="1881" y="-957"/>
         </scene>
-        <!--User Search View Controller-->
+        <!--User Search-->
         <scene sceneID="GBE-wD-t5l">
             <objects>
-                <viewController id="3hd-xm-wNC" customClass="UserSearchViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="User Search" id="3hd-xm-wNC" customClass="UserSearchViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Y3v-L8-Zew"/>
                         <viewControllerLayoutGuide type="bottom" id="fEe-ys-QJf"/>
@@ -260,6 +260,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAr-es-nx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1881" y="-246"/>
+        </scene>
+        <!--User-->
+        <scene sceneID="lda-V6-X4C">
+            <objects>
+                <viewController storyboardIdentifier="SINGLE_USER_VC" title="User" id="eWZ-6W-5Gv" customClass="UserViewController" customModule="GithubToGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JQs-j9-Ep3"/>
+                        <viewControllerLayoutGuide type="bottom" id="aJe-hG-Ih3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hic-DU-Z5c">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JKz-Eg-4Db">
+                                <rect key="frame" x="16" y="72" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="50b-gT-1SR"/>
+                                    <constraint firstAttribute="height" constant="200" id="jKp-Gu-D8p"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JKz-Eg-4Db" firstAttribute="leading" secondItem="hic-DU-Z5c" secondAttribute="leadingMargin" id="3y4-IW-Fdi"/>
+                            <constraint firstItem="JKz-Eg-4Db" firstAttribute="top" secondItem="JQs-j9-Ep3" secondAttribute="bottom" constant="8" id="faR-lD-LaQ"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="userAvatarImageView" destination="JKz-Eg-4Db" id="fFf-Ig-8Fq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zGB-7p-wEu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2567" y="-246"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aPf-SA-av6">

@@ -40,6 +40,13 @@ class UserSearchViewController: UIViewController, UICollectionViewDataSource, UI
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let user = self.users[indexPath.row]
+        let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("SINGLE_USER_VC") as UserViewController
+        destinationVC.user = user
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    
     // MARK: - SearchBar
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
